@@ -1,0 +1,19 @@
+<div>
+    <form #productForm="ngForm" (ngSubmit)="send()" class="formFields">
+        <div>
+            <label>Nazwa:</label> <input type="text" name="name" [(ngModel)]="model.name" #name="ngModel" required />
+            <span class="validationMsg" *ngIf="name.errors && name.touched">{{validMessages.showErrorMessage(name.errors)}}</span>
+        </div>
+        <div>
+            <label>Cena:</label> <input type="number" min="0.00" step="" name="price" pattern="[0-9]+(\.[0-9][0-9]?)?" [(ngModel)]="model.price" #price="ngModel" required />
+            <span class="validationMsg" *ngIf="price.errors && price.touched">{{validMessages.showErrorMessage(price.errors)}}</span>
+        </div>
+        <div *ngIf="serverErrors" class="validationMsg">   
+            {{serverErrors}}
+        </div>
+        <div>
+            <button routerLink="">Wróć</button>
+            <button type="submit" [disabled]="productForm.invalid || serverErrors">Dodaj</button>
+        </div>
+    </form>
+</div>

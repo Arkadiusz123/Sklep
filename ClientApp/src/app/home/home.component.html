@@ -1,0 +1,14 @@
+<h1>Lista produktów:</h1>
+<a routerLink='product-form'>Dodaj produkt</a>
+<table>
+    <tr>
+        <th>Nazwa</th>
+        <th>Cena</th>
+        <th>Narzędzia</th>
+    </tr>
+    <tr *ngFor="let product of products | async">
+        <td> {{product.name}} </td>
+        <td> {{product.price}} </td>
+        <td> <a routerLink='product-form/{{product.productId}}'>Edytuj produkt</a> </td>
+    </tr>
+</table>
