@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, Product } from '../api.service';
 import { ValidMessagesService } from '../valid-messages.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-product-form',
@@ -28,7 +29,15 @@ export class ProductFormComponent implements OnInit {
     }
 
     send() {
-        this.apiService.addItem(this.model as Product, this.controllerName).subscribe(
+        let productObservable: Observable<Product>;
+        
+        if (this.id){
+            productObservable = this.apiService.editItem(this.id, this.model as Product, this.controllerName);
+        }
+        else {
+            productObservable = this.apiService.addItem(this.model as Product, this.controllerName);
+        }
+        productObservable.subscribe(
             () => this.router.navigate(['']),
             error => {
                 this.serverErrors = error.error
