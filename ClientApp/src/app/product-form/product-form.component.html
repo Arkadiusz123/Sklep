@@ -11,9 +11,9 @@
         <div *ngIf="serverErrors" class="validationMsg">   
             {{serverErrors}}
         </div>
-        <div>
-            <button routerLink="">Wróć</button>
-            <button type="submit" [disabled]="productForm.invalid || serverErrors">Dodaj</button>
+        <div class="formButtons">
+            <button class="cancelButton" routerLink=""><i class="fa-solid fa-arrow-left-long" title="Wróć"></i></button>
+            <button class="submitButton" type="submit" [disabled]="productForm.invalid || serverErrors"><i class="fa-solid fa-check" title='{{ id ? "Edytuj" : "Dodaj" }}'></i></button>
         </div>
     </form>
 </div>

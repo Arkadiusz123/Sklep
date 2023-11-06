@@ -19,6 +19,10 @@ export class ApiService<T>{
         return this.httpClient.post<T>(this.baseUrl + `/${controllerName}/Add`, item);
     }
 
+    editItem(id: string, item: T, controllerName: string): Observable<T> {
+        return this.httpClient.post<T>(this.baseUrl + `/${controllerName}/Edit/${id}`, item);
+    }
+
     getItem(id: string, controllerName: string): Observable<T> {
         return this.httpClient.get<T>(this.baseUrl + `/${controllerName}/GetObject/${id}`);
     }

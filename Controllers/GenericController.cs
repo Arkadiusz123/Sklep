@@ -65,7 +65,6 @@ namespace Sklep.Controllers
                 return BadRequest(ModelState.ValidationMessage());
 
             _mapper.Map(viewModel, entity);
-            _unitOfWork.Repository<EntityType>().UpdateEntity(entity);  //sprawdzić, czy potrzebne
             _unitOfWork.SaveChanges();
 
             return Ok();

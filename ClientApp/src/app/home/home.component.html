@@ -1,5 +1,5 @@
 <h1>Lista produktów:</h1>
-<a routerLink='product-form'>Dodaj produkt</a>
+<a routerLink='product-form'><i class="fa-solid fa-plus" title="Dodaj nowy produkt"></i>Dodaj nowy produkt</a>
 <table>
     <tr>
         <th>Nazwa</th>
@@ -9,6 +9,6 @@
     <tr *ngFor="let product of products | async">
         <td> {{product.name}} </td>
         <td> {{product.price}} </td>
-        <td> <a routerLink='product-form/{{product.productId}}'>Edytuj produkt</a> </td>
+        <td> <a routerLink='product-form/{{product.productId}}'><i class="fa-solid fa-pencil" title="Edytuj"></i></a> </td>
     </tr>
 </table>

@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Provide sufficient contrast against white background */
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
 a {
   color: #0366d6;
 }
@@ -30,4 +32,28 @@ input.ng-invalid.ng-touched {
 .validationMsg{
     color: red;
     font-weight: bold;
+}
+
+.submitButton{
+  background-color: greenyellow;
+  border-radius: 50%; 
+}
+
+.cancelButton{
+  background-color: red;
+  border-radius: 50%; 
+}
+
+.formButtons {
+  text-align: center; /* Optional: Centers the buttons within the container */
+}
+
+.formButtons button {
+  margin: 5px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
