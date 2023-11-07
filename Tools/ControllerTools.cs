@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Linq;
-using System.Net;
-using System.Web;
 
 namespace Sklep.Tools
 {
@@ -16,29 +14,14 @@ namespace Sklep.Tools
                            .ToList();
 
             var errorString = string.Join(" ", errors).Replace(".", ",");
+            errorString = errorString.Remove(errorString.Length - 1);   //remove last comma
 
-            try
-            {
-                var translated = Translate(errorString, "pl");
-                return translated.Remove(translated.Length - 1);    //remove last comma
-            }
-            catch (System.Exception)
-            {
+            var translateResult = Translator.Translate(errorString, "pl");
+
+            if (translateResult.Success)
+                return translateResult.ResultValue;
+            else
                 return errorString;
-            }
-        }
-
-        public static string Translate(string text, string targetLanguage)
-        {
-            string url = $"https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={targetLanguage}&dt=t&q={HttpUtility.UrlEncode(text)}";
-
-            using (WebClient webClient = new WebClient())
-            {
-                string response = webClient.DownloadString(url);
-                dynamic result = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
-                string translatedText = result[0][0][0].ToString();
-                return translatedText;
-            }
         }
     }
 }

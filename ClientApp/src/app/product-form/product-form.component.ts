@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService, Product } from '../api.service';
-import { ValidMessagesService } from '../valid-messages.service';
+import { ApiService, Product } from '../services/api.service';
+import { ValidMessagesService } from '../services/valid-messages.service';
 import { Observable } from 'rxjs';
 
 @Component({
