@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, Product } from '../services/api.service';
 import { ValidMessagesService } from '../services/valid-messages.service';
 import { Observable } from 'rxjs';
+import { ErrorHandlerService } from '../services/error-handler.service';
 
 @Component({
     selector: 'app-product-form',
@@ -15,7 +16,8 @@ export class ProductFormComponent implements OnInit {
     serverErrors: string;
     id: string = "";
 
-    constructor(private route: ActivatedRoute, private apiService: ApiService<Product>, private router: Router, public validMessages: ValidMessagesService) { }
+    constructor(private route: ActivatedRoute, private apiService: ApiService<Product>, private router: Router, private errorHandler: ErrorHandlerService,
+         public validMessages: ValidMessagesService) { }
 
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
@@ -23,7 +25,7 @@ export class ProductFormComponent implements OnInit {
         if (this.id){
             this.apiService.getItem(this.id, this.controllerName).subscribe(
                 result => this.model = result,
-                error => console.log(error)
+                error => this.errorHandler.handleError(error)
             )
         }
     }
