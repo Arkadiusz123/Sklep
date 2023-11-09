@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService, Product } from '../services/api.service';
+import { ApiService } from '../services/api.service';
 import { ValidMessagesService } from '../services/valid-messages.service';
 import { Observable } from 'rxjs';
 import { ErrorHandlerService } from '../services/error-handler.service';
@@ -50,4 +50,10 @@ export class ProductFormComponent implements OnInit {
         );
     }
    
+}
+
+export interface Product {
+    productId?: number;
+    name: string;
+    price: number;
 }

@@ -27,9 +27,3 @@ export class ApiService<T>{
         return this.httpClient.get<T>(this.baseUrl + `/${controllerName}/GetObject/${id}`);
     }
 }
-
-export interface Product {
-    productId?: number;
-    name: string;
-    price: number;
-}
