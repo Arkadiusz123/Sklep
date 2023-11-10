@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Sklep.Controllers
 {
-    public abstract class GenericController<EntityType, ViewModelType> : Controller where EntityType : class where ViewModelType : class
+    public abstract class GenericController<EntityType, ViewModelType> : ControllerBase where EntityType : class where ViewModelType : class
     {
         protected UnitOfWork _unitOfWork;
         protected IMapper _mapper;
