@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         FetchDataComponent,
         ProductFormComponent,
         NotFoundComponent,
+        LoginComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),      
@@ -33,6 +35,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
             { path: 'product-form', component: ProductFormComponent },
             { path: 'product-form/:id', component: ProductFormComponent },
             { path: 'not-found', component: NotFoundComponent },
+            { path: 'log-in', component: LoginComponent }
         ])
     ],
     providers: [],
