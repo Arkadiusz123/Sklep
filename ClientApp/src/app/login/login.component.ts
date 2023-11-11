@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   model: Partial<User> = {};
-  serverErrors: string;
+  serverErrors: string = "";
 
   constructor(private authService: AuthService, public validMessages: ValidMessagesService) { }
 
@@ -17,12 +17,16 @@ export class LoginComponent implements OnInit {
   }
 
   logIn(){
-    this.authService.logIn(this.model as User);
+    console.log(this.model as User);
+    this.authService.logInUser(this.model as User).subscribe(
+      success => console.log(success)
+      //success => localStorage.setItem('token', )
+    );
   }
 
 }
 
 export interface User {
-  name: number;
+  username: number;
   password: string;
 }

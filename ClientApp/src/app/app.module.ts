@@ -12,6 +12,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,7 @@ import { LoginComponent } from './login/login.component';
             { path: 'log-in', component: LoginComponent }
         ])
     ],
-    providers: [],
+    providers: [AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
