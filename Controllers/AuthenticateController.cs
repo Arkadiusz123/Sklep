@@ -102,7 +102,7 @@ namespace Sklep.Controllers
                 await _userManager.AddToRoleAsync(user, role.ToString());
             }
 
-            return Ok(new Response { Status = "Success", Message = "Poprawnie zalogowano!" });
+            return Ok(new Response { Status = "Success", Message = "Poprawnie zarejestrowano!" });
         }
 
         [Authorize(Roles = "Admin")]

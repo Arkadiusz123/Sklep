@@ -13,6 +13,7 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,7 @@ import { AuthService } from './services/auth.service';
         FormsModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'counter', component: CounterComponent },
+            { path: 'counter', component: CounterComponent, canActivate: [AuthGuardService], },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'product-form', component: ProductFormComponent },
             { path: 'product-form/:id', component: ProductFormComponent },

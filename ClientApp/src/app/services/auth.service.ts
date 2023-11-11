@@ -1,24 +1,25 @@
-import { Injectable } from '@angular/core';
-import { User } from '../login/login.component';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-  private baseUrl: string = window.location.origin;
-  private controllerName: string = "Authenticate";
+export class AuthService implements OnInit {
 
-  constructor(private jwtHelper: JwtHelperService, private httpClient: HttpClient) { }
+  constructor() {}
 
-  logInUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.baseUrl + `/${this.controllerName}/Login`, user);
+  ngOnInit(): void {
   }
 
+  
   public isAuthenticated(): boolean {
-    const token = localStorage.getItem('token');
-    return !this.jwtHelper.isTokenExpired(token);
+    var token = localStorage.getItem('token');
+    console.log(token);
+    if(token){
+      return true;
+    }
+    else{
+      return false;
+    }
+
   }
 }
