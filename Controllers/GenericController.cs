@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sklep.Repository;
 using Sklep.Tools;
@@ -28,6 +29,7 @@ namespace Sklep.Controllers
                 .ToList();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public virtual ActionResult Add([FromBody]ViewModelType viewModel)
         {
