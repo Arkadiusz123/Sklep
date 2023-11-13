@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sklep.Repository;
 using Sklep.Tools;
@@ -19,7 +20,7 @@ namespace Sklep.Controllers
         }
 
         [HttpGet]
-        public virtual List<ViewModelType> GetList()
+        public virtual ActionResult<List<ViewModelType>> GetList()
         {
             return _unitOfWork.Repository<EntityType>()
                 .GetCollection()
@@ -28,6 +29,7 @@ namespace Sklep.Controllers
                 .ToList();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public virtual ActionResult Add([FromBody]ViewModelType viewModel)
         {

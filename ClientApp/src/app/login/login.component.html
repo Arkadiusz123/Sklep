@@ -1,8 +1,8 @@
 <div>
     <form #productForm="ngForm" (ngSubmit)="logIn()" class="formFields">
         <div>
-            <label>Login:</label> <input type="text" name="name" [(ngModel)]="model.name" #name="ngModel" required />
-            <span class="validationMsg" *ngIf="name.errors && name.touched">{{validMessages.showErrorMessage(name.errors)}}</span>
+            <label>Login:</label> <input type="text" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+            <span class="validationMsg" *ngIf="username.errors && username.touched">{{validMessages.showErrorMessage(username.errors)}}</span>
         </div>
         <div>
             <label>Hasło:</label> <input type="password" [(ngModel)]="model.password" #password="ngModel" required />
