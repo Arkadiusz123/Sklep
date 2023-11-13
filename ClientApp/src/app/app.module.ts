@@ -14,6 +14,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { AuthGuardService } from './services/auth-guard.service';
         ProductFormComponent,
         NotFoundComponent,
         LoginComponent,
+        AccessDeniedComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),      
@@ -32,11 +34,12 @@ import { AuthGuardService } from './services/auth-guard.service';
         FormsModule,
         RouterModule.forRoot([
             { path: '', component: HomeComponent, pathMatch: 'full' },
-            { path: 'counter', component: CounterComponent, canActivate: [AuthGuardService], },
+            { path: 'counter', component: CounterComponent, canActivate: [AuthGuardService], data: { expectedRole: "Admin" }},
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'product-form', component: ProductFormComponent },
             { path: 'product-form/:id', component: ProductFormComponent },
             { path: 'not-found', component: NotFoundComponent },
+            { path: 'access-denied', component: AccessDeniedComponent },
             { path: 'log-in', component: LoginComponent }
         ])
     ],

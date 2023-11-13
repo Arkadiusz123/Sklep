@@ -20,7 +20,7 @@ namespace Sklep.Controllers
         }
 
         [HttpGet]
-        public virtual List<ViewModelType> GetList()
+        public virtual ActionResult<List<ViewModelType>> GetList()
         {
             return _unitOfWork.Repository<EntityType>()
                 .GetCollection()

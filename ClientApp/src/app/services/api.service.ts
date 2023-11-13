@@ -17,9 +17,6 @@ export class ApiService<T>{
     }
 
     addItem(item: T, controllerName: string): Observable<T> {
-        const test = this.authService.getUserRoles();
-        console.log(test);
-
         return this.httpClient.post<T>(this.baseUrl + `/${controllerName}/Add`, item, {headers: this.authService.getHeaders()});
     }
 

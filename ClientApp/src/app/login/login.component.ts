@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ValidMessagesService } from '../services/valid-messages.service';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   serverErrors: string = "";
   
 
-  constructor(private httpClient: HttpClient, public validMessages: ValidMessagesService) { }
+  constructor(private httpClient: HttpClient, private router: Router, public validMessages: ValidMessagesService) { }
 
   ngOnInit(): void {
   }
@@ -25,8 +26,8 @@ export class LoginComponent implements OnInit {
     this.httpClient.post(this.baseUrl + `/${this.controllerName}/Login`, this.model as User).subscribe(
       success => {
         const token = JSON.stringify(success);
-        console.log(token);
         localStorage.setItem("token", JSON.stringify(success));
+        this.router.navigate(['']);
       },
       () => {
         this.serverErrors = "Niepoprawny login lub hasło"
@@ -34,7 +35,6 @@ export class LoginComponent implements OnInit {
             this.serverErrors = '';
         }, 4000);
     }
-      //success => localStorage.setItem('token', )
     );
   }
 
