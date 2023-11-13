@@ -45,6 +45,10 @@ export class AuthService implements OnInit {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
+  public logOut(){
+    localStorage.clear();
+  }
+
   private getToken(): string{
     const token = localStorage.getItem('token');
     if(!token){

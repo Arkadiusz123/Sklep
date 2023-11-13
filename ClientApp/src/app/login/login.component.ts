@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ValidMessagesService } from '../services/valid-messages.service';
-import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -15,14 +14,14 @@ export class LoginComponent implements OnInit {
 
   model: Partial<User> = {};
   serverErrors: string = "";
-  
+
 
   constructor(private httpClient: HttpClient, private router: Router, public validMessages: ValidMessagesService) { }
 
   ngOnInit(): void {
   }
 
-  logIn(){
+  logIn() {
     this.httpClient.post(this.baseUrl + `/${this.controllerName}/Login`, this.model as User).subscribe(
       success => {
         const token = JSON.stringify(success);
@@ -31,10 +30,10 @@ export class LoginComponent implements OnInit {
       },
       () => {
         this.serverErrors = "Niepoprawny login lub hasło"
-        setTimeout(()=>{
-            this.serverErrors = '';
+        setTimeout(() => {
+          this.serverErrors = '';
         }, 4000);
-    }
+      }
     );
   }
 
