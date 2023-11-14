@@ -13,6 +13,9 @@ export class ErrorHandlerService {
     if (error.status === 404) {
       this.router.navigate(['not-found']);
     }
+    else if (error.status === 401) {
+      this.router.navigate(['access-denied']);
+    }
 
     console.log(error);
   }
