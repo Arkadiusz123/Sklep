@@ -8,7 +8,6 @@ import { AuthService } from '../services/auth.service';
 })
 export class NavMenuComponent{
   isExpanded = false;
-  isLoggedIn: boolean;
 
   constructor(public authService: AuthService){}
 

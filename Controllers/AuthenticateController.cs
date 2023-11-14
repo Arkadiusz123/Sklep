@@ -8,6 +8,7 @@ using Sklep.Auth;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -114,6 +115,32 @@ namespace Sklep.Controllers
                     await _roleManager.CreateAsync(new IdentityRole(role.ToString()));
             }
 
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddRolesToUser(string userName, string roles)   //roles separated by ","
+        {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(roles))
+                return null;
+
+            var user = _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+                return null;
+
+            var rolesInApp = Enum.GetNames(typeof(UserRoles));
+
+            foreach (var role in roles.Split(','))
+            {
+                if (!rolesInApp.Contains(role))
+                    continue;
+
+                if (!await _roleManager.RoleExistsAsync(role))
+                    await _roleManager.CreateAsync(new IdentityRole(role));
+
+                await _userManager.AddToRoleAsync(user.Result, role);
+            }
             return Ok();
         }
 
