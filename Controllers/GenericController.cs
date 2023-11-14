@@ -71,5 +71,18 @@ namespace Sklep.Controllers
 
             return Ok();
         }
+
+        public virtual ActionResult Delete(int id)
+        {
+            var entity = _unitOfWork.Repository<EntityType>().GetEntity(id);
+
+            if (entity == null)
+                return NotFound();
+
+            _unitOfWork.Repository<EntityType>().Delete(entity);
+            _unitOfWork.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
