@@ -22,6 +22,10 @@ export class HomeComponent implements OnInit {
     }
 
     deleteItem(id: string){
+        if(!confirm("Czy na pewno chcesz usunąć?")){
+            return;
+        }
+
         this.apiService.deleteItem(id, this.controllerName)
         .subscribe(
             () => this.products = this.apiService.getList(this.controllerName),
