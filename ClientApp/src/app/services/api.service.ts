@@ -10,7 +10,7 @@ import { ErrorHandlerService } from './error-handler.service';
 export class ApiService<T>{
     private baseUrl: string = window.location.origin;
 
-    constructor(private httpClient: HttpClient, private authService: AuthService, private errorHandler: ErrorHandlerService) {
+    constructor(private httpClient: HttpClient, private authService: AuthService) {
     }
 
     getList(controllerName: string): Observable<T[]> {
@@ -22,17 +22,14 @@ export class ApiService<T>{
     }
 
     editItem(id: string, item: T, controllerName: string): Observable<T> {
-        return this.httpClient.post<T>(this.baseUrl + `/${controllerName}/Edit/${id}`, item);
+        return this.httpClient.post<T>(this.baseUrl + `/${controllerName}/Edit/${id}`, item, {headers: this.authService.getHeaders()});
     }
 
     getItem(id: string, controllerName: string): Observable<T> {
-        return this.httpClient.get<T>(this.baseUrl + `/${controllerName}/GetObject/${id}`);
+        return this.httpClient.get<T>(this.baseUrl + `/${controllerName}/GetObject/${id}`, {headers: this.authService.getHeaders()});
     }
 
     deleteItem(id: string, controllerName: string){
-        return this.httpClient.get(this.baseUrl + `/${controllerName}/Delete/${id}`, {headers: this.authService.getHeaders()}).subscribe(
-            () => {},
-            error => {this.errorHandler.handleError(error)}
-        );
+        return this.httpClient.delete(this.baseUrl + `/${controllerName}/Delete/${id}`, {headers: this.authService.getHeaders()});
     }
 }

@@ -72,6 +72,7 @@ namespace Sklep.Controllers
             return Ok();
         }
 
+        [HttpDelete]
         public virtual ActionResult Delete(int id)
         {
             var entity = _unitOfWork.Repository<EntityType>().GetEntity(id);
