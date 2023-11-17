@@ -11,7 +11,7 @@
         <td> {{product.price}} </td>
         <td>
              <a routerLink='product-form/{{product.productId}}'><i class="fa-solid fa-pencil" title="Edytuj"></i></a>
-             <a *ngIf="isAuthenticated" href="" (click)="apiService.deleteItem(product.productId , 'Product')"><i class="fa-solid fa-trash-can" title="Usuń"></i></a>
+             <a *ngIf="isAuthenticated" href="#" (click)="deleteItem(product.productId)"><i class="fa-solid fa-trash-can" title="Usuń"></i></a>
         </td>
     </tr>
 </table>

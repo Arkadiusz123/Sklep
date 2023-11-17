@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { Product } from '../product-form/product-form.component';
 import { AuthService } from '../services/auth.service';
+import { ErrorHandlerService } from '../services/error-handler.service';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +12,20 @@ import { AuthService } from '../services/auth.service';
 export class HomeComponent implements OnInit {
     products: Observable<Product[]>;
     isAuthenticated: boolean;
+    controllerName: string = "Product";
 
-    constructor(public apiService: ApiService<Product>, private authService: AuthService) { }
+    constructor(private apiService: ApiService<Product>, private authService: AuthService, private errorHandler: ErrorHandlerService) { }
 
     ngOnInit() {
-        this.products = this.apiService.getList("Product");
+        this.products = this.apiService.getList(this.controllerName);
         this.isAuthenticated = this.authService.isAuthenticated();
+    }
+
+    deleteItem(id: string){
+        this.apiService.deleteItem(id, this.controllerName)
+        .subscribe(
+            () => this.products = this.apiService.getList(this.controllerName),
+            error => {this.errorHandler.handleError(error)}
+        );
     }
 }
