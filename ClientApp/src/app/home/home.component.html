@@ -10,8 +10,8 @@
         <td> {{product.name}} </td>
         <td> {{product.price}} </td>
         <td>
-             <a routerLink='product-form/{{product.productId}}'><i class="fa-solid fa-pencil" title="Edytuj"></i></a>
-             <a *ngIf="isAuthenticated" href="#" (click)="deleteItem(product.productId)"><i class="fa-solid fa-trash-can" title="Usuń"></i></a>
+             <i class="fa-solid fa-pencil" title="Edytuj" *ngIf="isAuthenticated" routerLink='product-form/{{product.productId}}'></i>
+             <i class="fa-solid fa-trash-can" title="Usuń" *ngIf="isAuthenticated" (click)="deleteItem(product.productId)"></i>
         </td>
     </tr>
 </table>

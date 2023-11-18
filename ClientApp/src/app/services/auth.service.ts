@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as jwt from "jsonwebtoken"
 
 @Injectable({
@@ -7,7 +8,7 @@ import * as jwt from "jsonwebtoken"
 })
 export class AuthService implements OnInit {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
   }
@@ -45,8 +46,17 @@ export class AuthService implements OnInit {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
   }
 
+  public expirationDate(): Date {
+    const token = localStorage.getItem('token'); 
+    if(!token){
+      return null;
+    }
+    return new Date(JSON.parse(token).expiration);
+  }
+
   public logOut(){
     localStorage.clear();
+    this.router.navigate(['log-in']);
   }
 
   private getToken(): string{
