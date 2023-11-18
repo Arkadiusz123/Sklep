@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sklep.Models
 {
@@ -13,5 +14,7 @@ namespace Sklep.Models
         [RegularExpression(@"^\d+(\.\d{1,2})?$")]
         [Required]
         public decimal Price { get; set; }
+
+        public virtual List<ShoppingCardRow> ShoppingCardRows { get; set; }
     }
 }

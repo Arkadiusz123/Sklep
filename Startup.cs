@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Sklep.Auth;
 using Sklep.Models;
 using System;
 using System.Text;
@@ -35,7 +36,7 @@ namespace Sklep
             services.AddDbContext<ShopContext>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ShopContext>()
                 .AddDefaultTokenProviders();
 

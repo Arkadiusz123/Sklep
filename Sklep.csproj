@@ -35,10 +35,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20231029094349_InitialShopDB.cs" />
     <Compile Remove="Migrations\20231029094349_InitialShopDB.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Compile Remove="Migrations\20231118195720_ShoppingCard.cs" />
+    <Compile Remove="Migrations\20231118195720_ShoppingCard.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
