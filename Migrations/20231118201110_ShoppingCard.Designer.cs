@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sklep.Models;
 
 namespace Sklep.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    partial class ShopContextModelSnapshot : ModelSnapshot
+    [Migration("20231118201110_ShoppingCard")]
+    partial class ShoppingCard
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,11 +267,9 @@ namespace Sklep.Migrations
 
                     b.HasKey("ShoppingCardRowId");
 
-                    b.HasIndex("ShoppingCardId");
+                    b.HasIndex("ProductId");
 
-                    b.HasIndex("ProductId", "ShoppingCardId")
-                        .IsUnique()
-                        .HasFilter("[ShoppingCardId] IS NOT NULL");
+                    b.HasIndex("ShoppingCardId");
 
                     b.ToTable("ShoppingCardRows");
                 });

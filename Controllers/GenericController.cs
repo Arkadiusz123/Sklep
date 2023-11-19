@@ -10,8 +10,8 @@ namespace Sklep.Controllers
 {
     public abstract class GenericController<EntityType, ViewModelType> : ControllerBase where EntityType : class where ViewModelType : class
     {
-        protected UnitOfWork _unitOfWork;
-        protected IMapper _mapper;
+        protected readonly UnitOfWork _unitOfWork;
+        protected readonly IMapper _mapper;
 
         public GenericController(IMapper mapper)
         {
