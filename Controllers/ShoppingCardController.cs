@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sklep.Auth;
 using Sklep.Models;
 using Sklep.Repository;
+using System.Linq;
 
 namespace Sklep.Controllers
 {
@@ -13,13 +14,11 @@ namespace Sklep.Controllers
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly UserManager<ApplicationUser> _userManager;
 
         public ShoppingCardController(IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _unitOfWork = new UnitOfWork();
             _mapper = mapper;
-            _userManager = userManager;
         }
 
         [HttpGet]
@@ -29,16 +28,19 @@ namespace Sklep.Controllers
             if (product == null)
                 return NotFound();
 
-            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            var user = _unitOfWork.Repository<ApplicationUser>()
+                .GetCollectionWithRelated(x => x.ShoppingCard, x => x.ShoppingCard.ShoppingCardRows)
+                .SingleOrDefault(x => x.UserName == User.Identity.Name);
+
             if (user == null)
                 return Unauthorized();
 
-            var userResult = user.Result;
+            if (user.ShoppingCard == null)
+                user.ShoppingCard = new ShoppingCard();
 
-            if (userResult.ShoppingCard == null)
-                userResult.ShoppingCard = new ShoppingCard();
+            user.ShoppingCard.AddProduct(id);
+            _unitOfWork.Repository<ApplicationUser>().UpdateEntity(user);
 
-            userResult.ShoppingCard.AddProduct(id);
             _unitOfWork.SaveChanges();
 
             return Ok();

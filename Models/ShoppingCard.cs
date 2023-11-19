@@ -11,7 +11,7 @@ namespace Sklep.Models
         [ForeignKey("ApplicationUser")]
         public string ShoppingCardId { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public virtual List<ShoppingCardRow> ShoppingCardRows { get; set; }
 

@@ -12,6 +12,7 @@
         <td>
              <i class="fa-solid fa-pencil" title="Edytuj" *ngIf="isAuthenticated" routerLink='product-form/{{product.productId}}'></i>
              <i class="fa-solid fa-trash-can" title="Usuń" *ngIf="isAuthenticated" (click)="deleteItem(product.productId)"></i>
+             <i class="fa-solid fa-cart-plus" title="Dodaj do koszyka" *ngIf="isAuthenticated" (click)="shopCardService.addProductToCard(product.productId)"></i>
         </td>
     </tr>
 </table>

@@ -21,5 +21,11 @@ namespace Sklep.Models
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<ShoppingCardRow>().HasIndex(p => new { p.ProductId, p.ShoppingCardId }).IsUnique();
+        }
     }
 }

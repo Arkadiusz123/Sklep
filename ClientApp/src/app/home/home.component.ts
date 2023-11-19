@@ -4,6 +4,7 @@ import { ApiService } from '../services/api.service';
 import { Product } from '../product-form/product-form.component';
 import { AuthService } from '../services/auth.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
+import { ShoppingCardService } from '../services/shopping-card.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomeComponent implements OnInit {
     isAuthenticated: boolean;
     controllerName: string = "Product";
 
-    constructor(private apiService: ApiService<Product>, private authService: AuthService, private errorHandler: ErrorHandlerService) { }
+    constructor(private apiService: ApiService<Product>, private authService: AuthService, private errorHandler: ErrorHandlerService,
+         public shopCardService: ShoppingCardService) { }
 
     ngOnInit() {
         this.products = this.apiService.getList(this.controllerName);
