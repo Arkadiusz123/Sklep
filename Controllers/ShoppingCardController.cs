@@ -28,9 +28,7 @@ namespace Sklep.Controllers
             if (product == null)
                 return NotFound();
 
-            var user = _unitOfWork.Repository<ApplicationUser>()
-                .GetCollectionWithRelated(x => x.ShoppingCard, x => x.ShoppingCard.ShoppingCardRows)
-                .SingleOrDefault(x => x.UserName == User.Identity.Name);
+            var user = _unitOfWork.Repository<ApplicationUser>().GetCollection().SingleOrDefault(x => x.UserName == User.Identity.Name);
 
             if (user == null)
                 return Unauthorized();
