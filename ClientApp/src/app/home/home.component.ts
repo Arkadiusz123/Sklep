@@ -5,6 +5,7 @@ import { Product } from '../product-form/product-form.component';
 import { AuthService } from '../services/auth.service';
 import { ErrorHandlerService } from '../services/error-handler.service';
 import { ShoppingCardService } from '../services/shopping-card.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,8 @@ export class HomeComponent implements OnInit {
         this.apiService.deleteItem(id, this.controllerName)
         .subscribe(
             () => this.products = this.apiService.getList(this.controllerName),
-            error => {this.errorHandler.handleError(error)}
+            //() => this.products = this.products.pipe(map(result => result.filter(x => x.productId !== +id))),
+            error => this.errorHandler.handleError(error)
         );
     }
 }

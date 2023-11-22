@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
         NotFoundComponent,
         LoginComponent,
         AccessDeniedComponent,
+        ShoppingCardComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),      
@@ -34,7 +36,8 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
             { path: 'product-form/:id', component: ProductFormComponent, canActivate: [AuthGuardService], data: { expectedRole: "Admin" } },
             { path: 'not-found', component: NotFoundComponent },
             { path: 'access-denied', component: AccessDeniedComponent },
-            { path: 'log-in', component: LoginComponent }
+            { path: 'log-in', component: LoginComponent },
+            { path: 'shop-card', component: ShoppingCardComponent }
         ])
     ],
     providers: [AuthService],

@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Sklep.Auth;
 using Sklep.Models;
 using Sklep.Repository;
+using Sklep.ViewModels;
 using System.Linq;
 
 namespace Sklep.Controllers
@@ -22,15 +24,31 @@ namespace Sklep.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddProduct(int id)
+        public ActionResult GetShoppingCard()
+        {
+            var user = _unitOfWork.Repository<ApplicationUser>().GetCollection()
+                .Include(x => x.ShoppingCard)
+                .Include(x => x.ShoppingCard.ShoppingCardRows)
+                .ThenInclude(x => x.Product)
+                .SingleOrDefault(x => x.UserName == User.Identity.Name);
+
+            if (user == null)
+                return Unauthorized();
+
+            if (user.ShoppingCard == null || user.ShoppingCard.ShoppingCardRows == null)
+                return Ok();
+
+            return Ok(new ShoppingCardVm(user.ShoppingCard));
+        }
+
+        [HttpPost]
+        public ActionResult AddProduct(int id)
         {
             var product = _unitOfWork.Repository<Product>().GetEntity(id);
             if (product == null)
                 return NotFound();
 
-            var user = _unitOfWork.Repository<ApplicationUser>()
-                .GetCollectionWithRelated(x => x.ShoppingCard, x => x.ShoppingCard.ShoppingCardRows)
-                .SingleOrDefault(x => x.UserName == User.Identity.Name);
+            var user = _unitOfWork.Repository<ApplicationUser>().UsersWithShoppingCards().SingleOrDefault(x => x.UserName == User.Identity.Name);
 
             if (user == null)
                 return Unauthorized();

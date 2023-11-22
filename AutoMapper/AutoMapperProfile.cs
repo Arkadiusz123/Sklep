@@ -9,7 +9,9 @@ namespace Sklep.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<ProductVm, Product>();
+
             CreateMap<Product, ProductVm>();
+                //.ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price.ToString()));
         }
     }
 }
