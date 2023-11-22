@@ -20,8 +20,11 @@ export class HomeComponent implements OnInit {
          public shopCardService: ShoppingCardService) { }
 
     ngOnInit() {
-        this.products = this.apiService.getList(this.controllerName);
+        //this.products = this.apiService.getList(this.controllerName);
         this.isAuthenticated = this.authService.isAuthenticated();
+
+        this.apiService.getList(this.controllerName);
+        this.products = this.apiService.objects$;
     }
 
     deleteItem(id: string){
@@ -29,10 +32,9 @@ export class HomeComponent implements OnInit {
             return;
         }
 
-        this.apiService.deleteItem(id, this.controllerName)
+        this.apiService.deleteItem(id, this.controllerName, x => x.productId != +id)
         .subscribe(
-            () => this.products = this.apiService.getList(this.controllerName),
-            //() => this.products = this.products.pipe(map(result => result.filter(x => x.productId !== +id))),
+            () => {},
             error => this.errorHandler.handleError(error)
         );
     }
