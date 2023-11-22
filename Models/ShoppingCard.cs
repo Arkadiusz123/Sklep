@@ -27,7 +27,7 @@ namespace Sklep.Models
             if (existingRow != null)
                 existingRow.Quantity++;
             else
-                ShoppingCardRows.Add(new ShoppingCardRow() { Quantity = 1, ProductId = productId });
+                ShoppingCardRows.Add(new ShoppingCardRow() { ProductId = productId });
         }
     }
 }

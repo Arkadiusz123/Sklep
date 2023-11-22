@@ -20,7 +20,7 @@ namespace Sklep.Models
             .Build();
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();   //uncomment if you want to turn on lazy loading
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
