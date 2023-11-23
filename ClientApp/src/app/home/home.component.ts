@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
          public shopCardService: ShoppingCardService) { }
 
     ngOnInit() {
-        //this.products = this.apiService.getList(this.controllerName);
         this.isAuthenticated = this.authService.isAuthenticated();
 
         this.apiService.getList(this.controllerName);
