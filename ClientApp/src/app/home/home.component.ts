@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
             return;
         }
 
-        this.apiService.deleteItem(id, this.controllerName, x => x.productId != +id)
+        this.apiService.deleteItem(id, this.controllerName, "productId")
         .subscribe(
             () => {},
             error => this.errorHandler.handleError(error)
