@@ -57,8 +57,32 @@ namespace Sklep.Controllers
                 user.ShoppingCard = new ShoppingCard();
 
             user.ShoppingCard.AddProduct(id);
-            _unitOfWork.Repository<ApplicationUser>().UpdateEntity(user);
 
+            _unitOfWork.Repository<ApplicationUser>().UpdateEntity(user);
+            _unitOfWork.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public ActionResult RomoveProduct(int id)
+        {
+            var product = _unitOfWork.Repository<Product>().GetEntity(id);
+            if (product == null)
+                return NotFound();
+
+            var user = _unitOfWork.Repository<ApplicationUser>().UsersWithShoppingCards().SingleOrDefault(x => x.UserName == User.Identity.Name);
+            if (user == null)
+                return Unauthorized();
+
+            if (user.ShoppingCard == null)
+                return BadRequest();
+
+            var result = user.ShoppingCard.TryRemoveProduct(id);
+            if (!result)
+                return BadRequest();
+
+            _unitOfWork.Repository<ApplicationUser>().UpdateEntity(user);
             _unitOfWork.SaveChanges();
 
             return Ok();

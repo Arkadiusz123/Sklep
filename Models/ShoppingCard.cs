@@ -29,5 +29,19 @@ namespace Sklep.Models
             else
                 ShoppingCardRows.Add(new ShoppingCardRow() { ProductId = productId });
         }
+
+        public bool TryRemoveProduct(int productId)
+        {
+            if (ShoppingCardRows == null)
+                return false;
+
+            var row = ShoppingCardRows.SingleOrDefault(x => x.ProductId == productId);
+
+            if (row == null || row.Quantity < 1)
+                return false;
+
+            row.Quantity++;
+            return true;
+        }
     }
 }
