@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCardService } from '../services/shopping-card.service';
-import { ErrorHandlerService } from '../services/error-handler.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-card',
@@ -8,22 +8,20 @@ import { ErrorHandlerService } from '../services/error-handler.service';
   styleUrls: ['./shopping-card.component.css']
 })
 export class ShoppingCardComponent implements OnInit {
-  model: Partial<ShoppingCard> = {};
+  model: Observable<ShoppingCard>;
 
-  constructor(private shopCardService: ShoppingCardService, private errorHandler: ErrorHandlerService) { }
+  constructor(public shopCardService: ShoppingCardService) { }
 
   ngOnInit(): void {
-    this.shopCardService.getShoppingCard().subscribe(
-      result => this.model = result,
-      error => this.errorHandler.handleError(error)
-    )
+    this.shopCardService.getShoppingCard();
+    this.model = this.shopCardService.objects$;
   }
 
-  totalPrice(): number {
+  totalPrice(shopCard: ShoppingCard): number {
     let totalPrice = 0;
 
-     for(let i = 0; i < this.model.rows?.length; i++){
-     totalPrice += this.model.rows[i].productPrice * this.model.rows[i].quantity;
+     for(let i = 0; i < shopCard.rows.length; i++){
+     totalPrice += shopCard.rows[i].productPrice * shopCard.rows[i].quantity;
      }
      
     return totalPrice;

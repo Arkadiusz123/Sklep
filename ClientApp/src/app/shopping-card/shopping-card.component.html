@@ -1,20 +1,31 @@
 <h2>Koszyk</h2>
-<div>Data utworzenia: {{ model.created | date:'d/M/yy H:mm'}}</div>
+<div *ngIf="model | async as m">
+<div>Data utworzenia: {{ m.created | date:'d/M/yy H:mm'}}</div>
 <div><b>Dodane produkty:</b></div>
 <table>
+
     <tr>
         <th>Nazwa</th>
         <th>Ilość</th>
         <th>Cena(zł)</th>
+        <th>Narzędzia</th>
     </tr>
-    <tr *ngFor="let product of model.rows">
+
+    <tr *ngFor="let product of m.rows">
         <td> {{ product.productName }} </td>
         <td> {{ product.quantity }} </td>
         <td> {{ product.productPrice * product.quantity | number : '1.2-2' }} </td>
+        <td>
+            <i class="fa-solid fa-plus" (click)="shopCardService.addProductToCard(product.productId)"></i>
+            <i class="fa-solid fa-minus" (click)="shopCardService.removeProductFromCard(product.productId)"></i>
+        </td>
     </tr>
     <tr>
         <td> <b>Razem</b> </td>
         <td></td>
-        <td> <b>{{ totalPrice() | number : '1.2-2' }}</b> </td>
+        <td> <b>{{ totalPrice(m) | number : '1.2-2' }}</b> </td>
+        <td></td>
     </tr>
+
 </table>
+</div>

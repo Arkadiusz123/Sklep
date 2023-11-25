@@ -40,7 +40,11 @@ namespace Sklep.Models
             if (row == null || row.Quantity < 1)
                 return false;
 
-            row.Quantity++;
+            row.Quantity--;
+
+            if (row.Quantity < 1)
+                ShoppingCardRows.Remove(row);
+
             return true;
         }
     }
