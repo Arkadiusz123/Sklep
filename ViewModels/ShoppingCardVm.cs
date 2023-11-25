@@ -1,7 +1,6 @@
 ﻿using Sklep.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Sklep.ViewModels
 {
@@ -16,12 +15,10 @@ namespace Sklep.ViewModels
             {
                 Rows.Add(new ShoppingCardRwoVm(row));
             }
-            TotalPrice = Rows.Sum(x => x.Price);
         }
 
         public string ShoppingCardId { get; set; }
         public DateTime Created { get; set; }
         public List<ShoppingCardRwoVm> Rows { get; set; }
-        public decimal TotalPrice { get; set; }
     }
 }
