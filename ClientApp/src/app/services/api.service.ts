@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { ErrorHandlerService } from './error-handler.service';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -18,9 +18,8 @@ export class ApiService<T>{
 
     getList(controllerName: string): void {
         this.httpClient.get<T[]>(this.baseUrl + `/${controllerName}/GetList`, { headers: this.authService.getHeaders() })
-            .pipe(tap(objects => this.objectsSubject.next(objects)))
             .subscribe(
-                () => { },
+                success => this.objectsSubject.next(success),
                 error => this.errorHandler.handleError(error)
             );
     }

@@ -21,12 +21,11 @@ export class ShoppingCardComponent implements OnInit {
 
   totalPrice(): number {
     let totalPrice = 0;
-    // for(let product of this.model.rows){
-    //   totalPrice += product.productPrice * product.quantity;
-    // }
+
      for(let i = 0; i < this.model.rows?.length; i++){
      totalPrice += this.model.rows[i].productPrice * this.model.rows[i].quantity;
      }
+     
     return totalPrice;
   }
 
