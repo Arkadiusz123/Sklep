@@ -20,9 +20,7 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.isAuthenticated = this.authService.isAuthenticated();
-
-        this.apiService.getList(this.controllerName);
-        this.products = this.apiService.objects$;
+        this.products = this.apiService.getList(this.controllerName);
     }
 
     deleteItem(id: string){

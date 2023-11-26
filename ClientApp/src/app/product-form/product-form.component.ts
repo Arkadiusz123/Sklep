@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { ValidMessagesService } from '../services/valid-messages.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ErrorHandlerService } from '../services/error-handler.service';
 
 @Component({
@@ -10,11 +10,12 @@ import { ErrorHandlerService } from '../services/error-handler.service';
     templateUrl: './product-form.component.html',
     styleUrls: ['./product-form.component.css'],
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
     controllerName: string = 'Product';
     model: Partial<Product> = {};
     serverErrors: string;
     id: string = "";
+    private subscriptions: Subscription[] = [];
 
     constructor(private route: ActivatedRoute, private apiService: ApiService<Product>, private router: Router, private errorHandler: ErrorHandlerService,
          public validMessages: ValidMessagesService) { }
@@ -23,10 +24,11 @@ export class ProductFormComponent implements OnInit {
         this.id = this.route.snapshot.paramMap.get('id');
 
         if (this.id){
-            this.apiService.getItem(this.id, this.controllerName).subscribe(
+            const subscription = this.apiService.getItem(this.id, this.controllerName).subscribe(
                 result => this.model = result,
                 error => this.errorHandler.handleError(error)
-            )
+            );
+            this.subscriptions.push(subscription);
         }
     }
 
@@ -34,12 +36,12 @@ export class ProductFormComponent implements OnInit {
         let productObservable: Observable<Product>;
         
         if (this.id){
-            productObservable = this.apiService.editItem(this.id, this.model as Product, this.controllerName);
+            productObservable = this.apiService.editItem(this.id, this.model as Product, this.controllerName, "productId");
         }
         else {
             productObservable = this.apiService.addItem(this.model as Product, this.controllerName);
         }
-        productObservable.subscribe(
+        const subscription = productObservable.subscribe(
             () => this.router.navigate(['']),
             error => {
                 this.serverErrors = error.error
@@ -48,7 +50,16 @@ export class ProductFormComponent implements OnInit {
                 }, 4000);
             }
         );
+        this.subscriptions.push(subscription);
     }
+
+    ngOnDestroy() {
+        this.subscriptions.forEach(subscription => {
+          if (subscription) {
+            subscription.unsubscribe();
+          }
+        });
+      }
    
 }
 
