@@ -1,5 +1,5 @@
 <h1>Lista produktów:</h1>
-<a routerLink='product-form'><i class="fa-solid fa-plus" title="Dodaj nowy produkt"></i>Dodaj nowy produkt</a>
+<a routerLink='product-form' *ngIf="isAuthenticated"><i class="fa-solid fa-plus" title="Dodaj nowy produkt"></i>Dodaj nowy produkt</a>
 <table>
     <tr>
         <th>Nazwa</th>

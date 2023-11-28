@@ -1,8 +1,15 @@
-﻿namespace Sklep.Auth
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Sklep.Auth
 {
     public enum UserRoles
     {
         Admin,
-        User
+
+        [Display(Name = "Kupujący")]
+        User,
+
+        [Display(Name = "Sprzedawca")]
+        Seller
     }
 }

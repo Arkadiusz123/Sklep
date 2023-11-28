@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Sklep.Tools;
 
 namespace Sklep.Controllers
 {
@@ -63,7 +64,7 @@ namespace Sklep.Controllers
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Użykownik już istnieje!" });
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Użykownik już istnieje!" });
 
             ApplicationUser user = new ApplicationUser()
             {
@@ -73,7 +74,15 @@ namespace Sklep.Controllers
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Rejestracja nie powiodła się. Sprawdź dane." });
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Rejestracja nie powiodła się. Sprawdź dane." });
+
+            if (string.IsNullOrEmpty(model.Role) || model.Role == "Admin")
+                return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = "Nieprawidłowa rola." });
+
+            if (!await _roleManager.RoleExistsAsync(model.Role))
+                await _roleManager.CreateAsync(new IdentityRole(model.Role));
+
+            await _userManager.AddToRoleAsync(user, model.Role);
 
             return Ok(new Response { Status = "Success", Message = "Nowy użytkownik zarejestrowany!" });
         }
@@ -109,10 +118,10 @@ namespace Sklep.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateRoles()
         {
-            foreach (var role in Enum.GetValues(typeof(UserRoles)))
+            foreach (var role in Enum.GetNames(typeof(UserRoles)))
             {
-                if (!await _roleManager.RoleExistsAsync(role.ToString()))
-                    await _roleManager.CreateAsync(new IdentityRole(role.ToString()));
+                if (!await _roleManager.RoleExistsAsync(role))
+                    await _roleManager.CreateAsync(new IdentityRole(role));
             }
 
             return Ok();
@@ -142,6 +151,18 @@ namespace Sklep.Controllers
                 await _userManager.AddToRoleAsync(user.Result, role);
             }
             return Ok();
+        }
+
+        public ActionResult GetRolesList()
+        {
+            var roles = Enum.GetValues(typeof(UserRoles)).Cast<UserRoles>()
+                .Where(x => x.ToString() != "Admin")
+                .Select(x => new { 
+                    name = x.GetDisplayName(),
+                    value = x.ToString()
+                }).ToList();
+
+            return Ok(roles);
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)

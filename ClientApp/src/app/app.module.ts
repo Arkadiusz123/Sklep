@@ -37,6 +37,7 @@ import { ShoppingCardComponent } from './shopping-card/shopping-card.component';
             { path: 'not-found', component: NotFoundComponent },
             { path: 'access-denied', component: AccessDeniedComponent },
             { path: 'log-in', component: LoginComponent },
+            { path: 'register', component: LoginComponent, data: { register: true } },
             { path: 'shop-card', component: ShoppingCardComponent }
         ])
     ],
