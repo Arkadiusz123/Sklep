@@ -1,12 +1,29 @@
 <div>
-    <form #productForm="ngForm" (ngSubmit)="logIn()" class="formFields">
+    <form #productForm="ngForm" (ngSubmit)="register ? registerUser() : logIn()" class="formFields">
         <div>
-            <label>Login:</label> <input type="text" name="username" [(ngModel)]="model.username" #username="ngModel" required />
-            <span class="validationMsg" *ngIf="username.errors && username.touched">{{validMessages.showErrorMessage(username.errors)}}</span>
+            <label>Login:</label>
+             <input type="text" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+            <span class="validationMsg" *ngIf="username.errors && username.touched">{{ validMessages.showErrorMessage(username.errors) }}</span>
         </div>
         <div>
-            <label>Hasło:</label> <input type="password" [(ngModel)]="model.password" #password="ngModel" required />
-            <span class="validationMsg" *ngIf="password.errors && password.touched">{{validMessages.showErrorMessage(password.errors)}}</span>
+            <label>Hasło:</label>
+             <input type="password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+            <span class="validationMsg" *ngIf="password.errors && password.touched">{{ validMessages.showErrorMessage(password.errors) }}</span>
+        </div>
+        <div *ngIf="register">
+            <div>
+                <label>E-mail:</label>
+                 <input type="email" name="email" [(ngModel)]="model.email" #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                <span class="validationMsg" *ngIf="email.errors && email.touched">{{ validMessages.showErrorMessage(email.errors) }}</span>
+           </div>
+           <div>
+            <label>Rola:</label>
+            <select [(ngModel)]="model.role" name="role" #role="ngModel" required>
+                <option value="">Wybierz rolę</option>
+                <option *ngFor="let role of rolesList | async" [value]="role.value">{{ role.name }}</option>
+            </select>
+            <span class="validationMsg" *ngIf="role.errors && role.touched">{{ validMessages.showErrorMessage(role.errors) }}</span>
+       </div>
         </div>
         <div *ngIf="serverErrors" class="validationMsg">   
             {{serverErrors}}
