@@ -283,9 +283,10 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-App/ClientApp/node_modules/
-App/ClientApp/.angular/cache/
-App/ClientApp/dist/
+SklepApp/ClientApp/node_modules/
+SklepApp/ClientApp/.angular/cache/
+SklepApp/ClientApp/dist/
+SklepApp/node_modules/
 
 # Visual Studio 6 build log
 *.plg
