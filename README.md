@@ -10,7 +10,7 @@ Sellers can add and modify new products.
 - View and manage the shopping cart
 - Add and modify products
 
-  ## Technologies Used
+## Technologies Used
 
 - HTML, CSS, JavaScript
 - Angular for the front-end
